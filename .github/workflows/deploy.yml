@@ -21,7 +21,7 @@ jobs:
         id: bicep_deploy
         uses: azure/arm-deploy@v2
         with:
-          scope: resourceGroup
+          scope: resourcegroup
           resourceGroupName: rg-devops-portfolio
           template: ./infra/main.bicep
 

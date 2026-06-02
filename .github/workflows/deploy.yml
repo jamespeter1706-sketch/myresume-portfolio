@@ -1,0 +1,34 @@
+name: Deploy DevOps Portfolio
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-infra-and-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Infrastructure via Bicep
+        id: bicep_deploy
+        uses: azure/arm-deploy@v2
+        with:
+          scope: resourceGroup
+          resourceGroupName: rg-devops-portfolio
+          template: ./infra/main.bicep
+
+      - name: Activate Static Hosting and Upload Site Files
+        uses: azure/CLI@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob service-properties update --account-name ${{ steps.bicep_deploy.outputs.storageName }} --static-website --index-document index.html
+            az storage blob upload-batch --account-name ${{ steps.bicep_deploy.outputs.storageName }} --auth-mode key -d '$web' -s ./site --overwrite

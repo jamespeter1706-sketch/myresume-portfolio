@@ -25,7 +25,7 @@ jobs:
           resourceGroupName: rg-devops-portfolio
           template: ./infra/main.bicep
 
-     -  name: Activate Static Hosting and Upload Site Files
+     - name: Activate Static Hosting and Upload Site Files
         uses: azure/CLI@v2
         with:
           inlineScript: |

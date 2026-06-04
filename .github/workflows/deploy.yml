@@ -18,14 +18,13 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy Infrastructure via Bicep
-        id: bicep_deploy
         uses: azure/arm-deploy@v2
         with:
           scope: resourcegroup
-          resourceGroupName: rg-devops-portfolio
+          resourceGroupName: 'rg-devops-portfolio'
           template: ./infra/main.bicep
 
-     - name: Activate Static Hosting and Upload Site Files
+      - name: Activate Static Hosting and Upload Site Files
         uses: azure/CLI@v2
         with:
           inlineScript: |

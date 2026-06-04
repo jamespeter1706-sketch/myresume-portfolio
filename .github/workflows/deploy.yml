@@ -25,10 +25,9 @@ jobs:
           resourceGroupName: rg-devops-portfolio
           template: ./infra/main.bicep
 
-      - name: Activate Static Hosting and Upload Site Files
+     - name: Activate Static Hosting and Upload Site Files
         uses: azure/CLI@v2
         with:
-          azcliversion: latest
           inlineScript: |
-            az storage blob service-properties update --account-name jpresume2026xyz --static-website true
-            az storage blob upload-batch --account-name ${{ steps.bicep_deploy.outputs.storageName }} --auth-mode key -d '$web' -s ./site --overwrite
+            az storage blob service-properties update --account-name devopsportfoliosa1706 --static-website true --index-document index.html --404-document error.html
+            az storage blob upload-batch --account-name devopsportfoliosa1706 --auth-mode key -d '$web' -s ./site

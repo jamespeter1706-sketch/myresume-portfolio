@@ -31,7 +31,7 @@ jobs:
           resourceGroupName: ${{ steps.parse_rg.outputs.rg_name }}
           template: ./infra/main.bicep
 
-- name: Activate Static Hosting and Upload Site Files
+      - name: Activate Static Hosting and Upload Site Files
         uses: azure/CLI@v2
         with:
           azcliversion: 2.86.0

@@ -31,12 +31,12 @@ jobs:
           resourceGroupName: ${{ steps.parse_rg.outputs.rg_name }}
           template: ./infra/main.bicep
 
-      - name: Activate Static Hosting and Upload Site Files
+- name: Activate Static Hosting and Upload Site Files
         uses: azure/CLI@v2
         with:
           azcliversion: 2.86.0
           inlineScript: |
-            STORAGE_NAME="${{ steps.bicep_deploy.outputs.storageAccountName }}"
-            echo "Targeting storage account: $STORAGE_NAME"
+            STORAGE_NAME="stdevopsknjmjnqhqcjm6"
+            echo "Targeting active storage account: $STORAGE_NAME"
             az storage blob service-properties update --account-name $STORAGE_NAME --static-website --index-document index.html
             az storage blob upload-batch --account-name $STORAGE_NAME -s ./site -d '$web'
